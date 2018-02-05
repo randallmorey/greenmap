@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+  - '9'
+addons:
+  chrome: stable
+  firefox: stable
+
+sudo: required
+
+cache:
+  directories:
+    - ~/.npm
+
+after_success:
+  - npm run travis-deploy-once "npm run semantic-release"
+
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

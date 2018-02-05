@@ -1,0 +1,6 @@
+framework: mocha
+launch_in_ci:
+  - Chrome
+  - Firefox
+src_files:
+  - 'dist/tests.js'
