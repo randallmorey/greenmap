@@ -16,6 +16,9 @@
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
   },
+  "dependencies": {
+    "greenlet": "^0.1.2"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -25,7 +28,6 @@
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.17.0",
-    "greenlet": "^0.1.2",
     "requirejs": "^2.3.5",
     "semantic-release": "^12.4.1",
     "testem": "^2.0.0",
