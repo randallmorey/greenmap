@@ -1,6 +1,7 @@
 # Greenmap
 
 [![Travis](https://travis-ci.org/randallmorey/greenmap.svg?branch=master)](https://travis-ci.org/randallmorey/greenmap)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c2a7454bfdda8d068863/maintainability)](https://codeclimate.com/github/randallmorey/greenmap/maintainability)
 
 Map arrays asynchronously in separate threads.  Powered by [greenlet][greenlet].
 
