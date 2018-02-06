@@ -21,6 +21,8 @@ Pass an array and a map function to execute asynchronously in a separate thread.
 `await` result or use as a promise.
 
 ```js
+import { map } from 'greenmap';
+
 async function mapArray() {
   const result = await map([1, 2, 3], (item) => ++item);
   console.log(result);
