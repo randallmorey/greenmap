@@ -9,8 +9,8 @@
   "main": "greenmap.js",
   "scripts": {
     "commit": "npm test && git-cz",
-    "build": "browserify greenmap.js -o dist/greenmap.js -t [ babelify --presets es2015 ]",
-    "build:tests": "browserify tests.js -o dist/tests.js -t [ babelify --presets es2015 ]",
+    "build": "browserify greenmap.js -o dist/greenmap.js",
+    "build:tests": "browserify tests.js -o dist/tests.js",
     "test": "npm run build:tests && eslint *.js && testem ci -P 3",
     "test:server": "npm run build:tests && eslint *.js && testem",
     "semantic-release": "semantic-release",
@@ -37,5 +37,12 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "browserify": {
+    "transform": [
+      ["babelify", {
+        "presets": ["es2015"]
+      }]
+    ]
   }
 }
