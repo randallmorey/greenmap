@@ -1,6 +1,5 @@
 import { map } from './greenmap';
-
-const assert = require('assert');
+import assert from 'assert';
 
 describe('Greenmap map():', () => {
   it('asynchronously maps the passed array using the passed function', async (done) => {
