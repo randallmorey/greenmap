@@ -1,4 +1,5 @@
 import greenlet from 'greenlet';
+import mapWorker from './workers/map';
 
 /**
  * Map an array asynchronously in a separate thread.
@@ -14,15 +15,7 @@ function map (data, fn) {
   const fnString = '(' + fn.toString() + ')';
   // Setup the mapper via greenlet to run in a worker.  The mapper accepts the
   // array (`data`) and the function as a string (`fnString`) as arguments.
-  const mapper = greenlet((data, fnString) => {
-    // Yes eval is evil.  However, greenlet depends entirely on evaluated JS
-    // passed by data URI to the web worker.  It would be lovely if web workers
-    // supported inline invocation, but they do not.
-    // So fly safe and don't pass user or third-party scripts through `fn`.
-    const fn = eval(fnString);
-    // If `data` is falsy, return null.
-    return data ? data.map(fn) : null;
-  });
+  const mapper = greenlet(mapWorker);
 
   return mapper(data, fnString);
 };
