@@ -10,7 +10,7 @@ describe('Greenmap map():', () => {
     done();
   });
 
-  it('should return a promise that asynchronously maps the passed array using the passed function', async (done) => {
+  it('should return a promise that asynchronously maps the passed array using the passed function', (done) => {
     const promise = map([1, 2, 3], (item) => ++item);
     assert.ok(promise);
     promise.then((result) => {
@@ -20,4 +20,14 @@ describe('Greenmap map():', () => {
       done();
     });
   });
+});
+
+Testem.afterTests((config, data, callback) => {
+  const coverage = JSON.stringify(window.__coverage__);
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) callback();
+  };
+  xhr.open('POST', '/coverage', true);
+  xhr.send(coverage);
 });
