@@ -2,6 +2,7 @@
 
 [![Travis](https://travis-ci.org/randallmorey/greenmap.svg?branch=master)](https://travis-ci.org/randallmorey/greenmap)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c2a7454bfdda8d068863/maintainability)](https://codeclimate.com/github/randallmorey/greenmap/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c2a7454bfdda8d068863/test_coverage)](https://codeclimate.com/github/randallmorey/greenmap/test_coverage)
 
 Map arrays asynchronously in separate threads.  Powered by [greenlet][greenlet].
 
