@@ -16,7 +16,6 @@ function map (data, fn) {
   // Setup the mapper via greenlet to run in a worker.  The mapper accepts the
   // array (`data`) and the function as a string (`fnString`) as arguments.
   const mapper = greenlet(mapWorker);
-
   return mapper(data, fnString);
 };
 

@@ -12,6 +12,5 @@ export default (data, fnString) => {
   // supported inline invocation, but they do not.
   // So fly safe and don't pass user or third-party scripts through `fn`.
   const fn = eval(fnString);
-  // If `data` is falsy, return null.
-  return data ? data.map(fn) : null;
+  return data.map(fn);
 };
