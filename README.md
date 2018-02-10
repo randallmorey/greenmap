@@ -7,8 +7,8 @@
 
 Map arrays asynchronously in separate threads.  Powered by [greenlet][greenlet].
 
-**Greenmap** supports only web browsers because [greenlet][greenlet] uses
-web workers.
+**Greenmap** supports only browsers, since [greenlet][greenlet] relies on web
+workers.
 
 
 ## Installation

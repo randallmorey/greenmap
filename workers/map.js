@@ -1,10 +1,10 @@
-// NOTE:  worker functions live in separate files so that they may be excluded
-// from coverage instrumentation.  Worker functions are expressed as real code
-// for convenience only.  In reality, they execute in their own scopes, separate
-// from surrounding code.  `greenlet` achieves this by first converting the
-// function to a data URI string with which to instantiate a web worker.
-// This syntactic magic trick means that code running within the worker cannot
-// be instrumented.
+/*
+  NOTE:  Worker functions run in a separate execution context and do not have
+  access to the surrounding scope.  The separation breaks normal coverage
+  instrumentation, since there is no way express this difference of context
+  (ES is ostensibly single-threaded).  Worker functions must live in their own
+  files to be ignored by coverage.
+*/
 
 export default (data, fnString) => {
   // Yes eval is evil.  However, greenlet depends entirely on evaluated JS
