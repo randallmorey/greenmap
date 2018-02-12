@@ -10,5 +10,6 @@ ratings:
   paths:
     - "*.js"
 exclude_paths:
+  - coverage/
   - dist/
   - node_modules/
