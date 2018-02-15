@@ -1,4 +1,4 @@
-import { map, reduce } from './greenmap';
+import { map, reduce, sort } from './greenmap';
 import assert from 'assert';
 
 describe('Greenmap map():', () => {
@@ -42,6 +42,35 @@ describe('Greenmap reduce():', () => {
     const result = await reduce([1, 2, 3, 4], ((accumulator, currentValue) => accumulator + currentValue), 10);
     assert.equal(result, 20);
     done();
+  });
+});
+
+describe('Greenmap sort():', () => {
+  it('asynchronously sorts the passed array using the passed comparator function', async (done) => {
+    const result = await sort([1, 2, 3], (a, b) => a < b);
+    assert.equal(result[0], 3);
+    assert.equal(result[1], 2);
+    assert.equal(result[2], 1);
+    done();
+  });
+
+  it('asynchronously sorts the passed array without a comparator function', async (done) => {
+    const result = await sort([3, 2, 1]);
+    assert.equal(result[0], 1);
+    assert.equal(result[1], 2);
+    assert.equal(result[2], 3);
+    done();
+  });
+
+  it('should return a promise that asynchronously sorts the passed array using the passed comparator function', (done) => {
+    const promise = sort([1, 2, 3], (a, b) => a < b);
+    assert.ok(promise);
+    promise.then((result) => {
+      assert.equal(result[0], 3);
+      assert.equal(result[1], 2);
+      assert.equal(result[2], 1);
+      done();
+    });
   });
 });
 
