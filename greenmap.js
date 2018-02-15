@@ -1,6 +1,7 @@
 import greenlet from 'greenlet';
 import mapWorker from './workers/map';
 import reduceWorker from './workers/reduce';
+import sortWorker from './workers/sort';
 
 /**
  * Map an array asynchronously in a separate thread.
@@ -37,4 +38,21 @@ function reduce (data, fn, initialValue) {
   return reducer(data, fnString, initialValue);
 };
 
-export { map, reduce };
+/**
+ * Sort an array asynchronously in a separate thread.
+ * @public
+ * @param {Array} data  an array
+ * @param {Function} fn  a comparator function to sort `data`
+ * @returns {Promise|null} a promise that resolves with the final sorted array,
+ *          compatible with `async/await` syntax, or null if array is falsy
+ */
+function sort (data, fn) {
+  // Convert the passed function to a string, since functions can't be passed
+  // directly to web workers.
+  const fnString = fn ? '(' + fn.toString() + ')' : '';
+  // Setup the sorter via greenlet to run in a worker.
+  const sorter = greenlet(sortWorker);
+  return sorter(data, fnString);
+};
+
+export { map, reduce, sort };
