@@ -4,6 +4,18 @@ import reduceWorker from './workers/reduce';
 import sortWorker from './workers/sort';
 
 /**
+ * Converts a function to a code string.
+ * @private
+ * @param {Function} fn a function
+ * @returns {String} a code string representation of the function, parenthesized
+ */
+function functionToString(fn) {
+  // Convert the passed function to a string, since functions can't be passed
+  // directly to web workers.
+  return fn ? `(${fn.toString()})` : '';
+};
+
+/**
  * Map an array asynchronously in a separate thread.
  * @public
  * @param {Array} data  an array
@@ -12,12 +24,9 @@ import sortWorker from './workers/sort';
  *          compatible with `async/await` syntax, or null if array is falsy
  */
 function map (data, fn) {
-  // Convert the passed function to a string, since functions can't be passed
-  // directly to web workers.
-  const fnString = '(' + fn.toString() + ')';
   // Setup the mapper via greenlet to run in a worker.
   const mapper = greenlet(mapWorker);
-  return mapper(data, fnString);
+  return mapper(data, functionToString(fn));
 };
 
 /**
@@ -30,12 +39,9 @@ function map (data, fn) {
  *          compatible with `async/await` syntax, or null if array is falsy
  */
 function reduce (data, fn, initialValue) {
-  // Convert the passed function to a string, since functions can't be passed
-  // directly to web workers.
-  const fnString = '(' + fn.toString() + ')';
   // Setup the reducer via greenlet to run in a worker.
   const reducer = greenlet(reduceWorker);
-  return reducer(data, fnString, initialValue);
+  return reducer(data, functionToString(fn), initialValue);
 };
 
 /**
@@ -47,12 +53,9 @@ function reduce (data, fn, initialValue) {
  *          compatible with `async/await` syntax, or null if array is falsy
  */
 function sort (data, fn) {
-  // Convert the passed function to a string, since functions can't be passed
-  // directly to web workers.
-  const fnString = fn ? '(' + fn.toString() + ')' : '';
   // Setup the sorter via greenlet to run in a worker.
   const sorter = greenlet(sortWorker);
-  return sorter(data, fnString);
+  return sorter(data, functionToString(fn));
 };
 
 export { map, reduce, sort };
