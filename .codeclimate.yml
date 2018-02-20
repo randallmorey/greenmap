@@ -13,3 +13,4 @@ exclude_paths:
   - coverage/
   - dist/
   - node_modules/
+  - test*
