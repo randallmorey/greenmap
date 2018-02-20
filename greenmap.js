@@ -20,8 +20,7 @@ function functionToString(fn) {
  * @public
  * @param {Array} data  an array
  * @param {Function} fn  a function to map `data`
- * @returns {Promise|null} a promise that resolves with the final mapped array,
- *          compatible with `async/await` syntax, or null if array is falsy
+ * @returns {Promise|null} a promise that resolves with the final mapped array
  */
 function map (data, fn) {
   // Setup the mapper via greenlet to run in a worker.
@@ -35,8 +34,7 @@ function map (data, fn) {
  * @param {Array} data  an array
  * @param {Function} fn  a function to reduce `data`
  * @param {any} initialValue optional initial value
- * @returns {Promise|null} a promise that resolves with the final reduced value,
- *          compatible with `async/await` syntax, or null if array is falsy
+ * @returns {Promise|null} a promise that resolves with the final reduced value
  */
 function reduce (data, fn, initialValue) {
   // Setup the reducer via greenlet to run in a worker.
@@ -49,8 +47,7 @@ function reduce (data, fn, initialValue) {
  * @public
  * @param {Array} data  an array
  * @param {Function} fn  a comparator function to sort `data`
- * @returns {Promise|null} a promise that resolves with the final sorted array,
- *          compatible with `async/await` syntax, or null if array is falsy
+ * @returns {Promise|null} a promise that resolves with the final sorted array
  */
 function sort (data, fn) {
   // Setup the sorter via greenlet to run in a worker.
