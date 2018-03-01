@@ -1,4 +1,4 @@
-import { map, reduce, sort } from './greenmap';
+import { map, reduce, sort, find } from './greenmap';
 import assert from 'assert';
 
 describe('Greenmap map():', () => {
@@ -69,6 +69,33 @@ describe('Greenmap sort():', () => {
       assert.equal(result[0], 3);
       assert.equal(result[1], 2);
       assert.equal(result[2], 1);
+      done();
+    });
+  });
+});
+
+describe('Greenmap find():', () => {
+  it('asynchronously finds an element within the passed array using the passed function', async (done) => {
+    const result = await find([
+      {id: 1, name: 'wibble'},
+      {id: 2, name: 'wubble'},
+      {id: 3, name: 'flub'}
+    ], (item) => item.id === 2);
+    assert.equal(result.id, 2);
+    assert.equal(result.name, 'wubble');
+    done();
+  });
+
+  it('should return a promise that asynchronously find an element within the passed array using the passed function', (done) => {
+    const promise = find([
+      {id: 1, name: 'wibble'},
+      {id: 2, name: 'wubble'},
+      {id: 3, name: 'flub'}
+    ], (item) => item.id === 2);
+    assert.ok(promise);
+    promise.then((result) => {
+      assert.equal(result.id, 2);
+      assert.equal(result.name, 'wubble');
       done();
     });
   });

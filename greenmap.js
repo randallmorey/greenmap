@@ -2,6 +2,7 @@ import greenlet from 'greenlet';
 import mapWorker from './workers/map';
 import reduceWorker from './workers/reduce';
 import sortWorker from './workers/sort';
+import findWorker from './workers/find';
 
 /**
  * Converts a function to a code string.
@@ -55,4 +56,17 @@ function sort (data, fn) {
   return sorter(data, functionToString(fn));
 };
 
-export { map, reduce, sort };
+/**
+ * Find an element within an array asynchronously in a separate thread.
+ * @public
+ * @param {Array} data  an array
+ * @param {Function} fn  a matcher function to find an element within `data`
+ * @returns {Promise|null} a promise that resolves with the final found value
+ */
+function find (data, fn) {
+  // Setup the sorter via greenlet to run in a worker.
+  const finder = greenlet(findWorker);
+  return finder(data, functionToString(fn));
+};
+
+export { map, reduce, sort, find };
