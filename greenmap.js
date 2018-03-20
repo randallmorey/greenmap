@@ -3,6 +3,7 @@ import mapWorker from './workers/map';
 import reduceWorker from './workers/reduce';
 import sortWorker from './workers/sort';
 import findWorker from './workers/find';
+import filterWorker from './workers/filter';
 
 /**
  * Converts a function to a code string.
@@ -23,7 +24,7 @@ function functionToString(fn) {
  * @param {Function} fn  a function to map `data`
  * @returns {Promise|null} a promise that resolves with the final mapped array
  */
-function map (data, fn) {
+function map(data, fn) {
   // Setup the mapper via greenlet to run in a worker.
   const mapper = greenlet(mapWorker);
   return mapper(data, functionToString(fn));
@@ -37,7 +38,7 @@ function map (data, fn) {
  * @param {any} initialValue optional initial value
  * @returns {Promise|null} a promise that resolves with the final reduced value
  */
-function reduce (data, fn, initialValue) {
+function reduce(data, fn, initialValue) {
   // Setup the reducer via greenlet to run in a worker.
   const reducer = greenlet(reduceWorker);
   return reducer(data, functionToString(fn), initialValue);
@@ -50,7 +51,7 @@ function reduce (data, fn, initialValue) {
  * @param {Function} fn  a comparator function to sort `data`
  * @returns {Promise|null} a promise that resolves with the final sorted array
  */
-function sort (data, fn) {
+function sort(data, fn) {
   // Setup the sorter via greenlet to run in a worker.
   const sorter = greenlet(sortWorker);
   return sorter(data, functionToString(fn));
@@ -63,10 +64,23 @@ function sort (data, fn) {
  * @param {Function} fn  a matcher function to find an element within `data`
  * @returns {Promise|null} a promise that resolves with the final found value
  */
-function find (data, fn) {
-  // Setup the sorter via greenlet to run in a worker.
+function find(data, fn) {
+  // Setup the finder via greenlet to run in a worker.
   const finder = greenlet(findWorker);
   return finder(data, functionToString(fn));
 };
 
-export { map, reduce, sort, find };
+/**
+ * Filters elements within an array asynchronously in a separate thread.
+ * @public
+ * @param {Array} data  an array
+ * @param {Function} fn  a filter function to apply to elements within `data`
+ * @returns {Promise|null} a promise that resolves with the final filtered array
+ */
+function filter(data, fn) {
+  // Setup the filterer via greenlet to run in a worker.
+  const filterer = greenlet(filterWorker);
+  return filterer(data, functionToString(fn));
+};
+
+export { map, reduce, sort, find, filter };
