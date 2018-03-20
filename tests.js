@@ -1,4 +1,4 @@
-import { map, reduce, sort, find } from './greenmap';
+import { map, reduce, sort, find, filter } from './greenmap';
 import assert from 'assert';
 
 describe('Greenmap map():', () => {
@@ -98,6 +98,18 @@ describe('Greenmap find():', () => {
       assert.equal(result.name, 'wubble');
       done();
     });
+  });
+});
+
+describe('Greenmap filter():', () => {
+  it('asynchronously filters elements within the passed array using the passed function', async () => {
+    const result = await filter([
+      {id: 1, name: 'wibble'},
+      {id: 2, name: 'wubble'},
+      {id: 3, name: 'flub'}
+    ], (item) => item.id !== 1);
+    assert.equal(result.length, 2);
+    assert.equal(result[0].name, 'wubble');
   });
 });
 
