@@ -9,17 +9,6 @@ describe('Greenmap map():', () => {
     assert.equal(result[2], 4);
     done();
   });
-
-  it('should return a promise that asynchronously maps the passed array using the passed function', (done) => {
-    const promise = map([1, 2, 3], (item) => ++item);
-    assert.ok(promise);
-    promise.then((result) => {
-      assert.equal(result[0], 2);
-      assert.equal(result[1], 3);
-      assert.equal(result[2], 4);
-      done();
-    });
-  });
 });
 
 describe('Greenmap reduce():', () => {
