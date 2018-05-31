@@ -4,6 +4,7 @@ import reduceWorker from './workers/reduce';
 import sortWorker from './workers/sort';
 import findWorker from './workers/find';
 import filterWorker from './workers/filter';
+import someWorker from './workers/some';
 
 /**
  * Converts a function to a code string.
@@ -83,4 +84,18 @@ function filter(data, fn) {
   return filterer(data, functionToString(fn));
 };
 
-export { map, reduce, sort, find, filter };
+/**
+ * Tests if some elements in an array passes a test,
+ * asynchronously in a separate thread.
+ * @public
+ * @param {Array} data  an array
+ * @param {Function} fn  a test function to apply to elements within `data`
+ * @returns {Promise|null} a promise that resolves with a boolean
+ */
+function some(data, fn) {
+  // Setup the test via greenlet to run in a worker.
+  const test = greenlet(someWorker);
+  return test(data, functionToString(fn));
+};
+
+export { map, reduce, sort, find, filter, some };
