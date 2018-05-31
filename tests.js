@@ -1,4 +1,4 @@
-import { map, reduce, sort, find, filter } from './greenmap';
+import { map, reduce, sort, find, filter, some } from './greenmap';
 import assert from 'assert';
 
 describe('Greenmap map():', () => {
@@ -99,6 +99,23 @@ describe('Greenmap filter():', () => {
     ], (item) => item.id !== 1);
     assert.equal(result.length, 2);
     assert.equal(result[0].name, 'wubble');
+  });
+});
+
+describe('Greenmap some():', () => {
+  it('asynchronously tests elements within the passed array using the passed test function', async () => {
+    let result = await some([
+      {id: 1, color: 'green'},
+      {id: 2, color: 'green'},
+      {id: 3, color: 'red'}
+    ], (item) => item.color === 'green');
+    assert.equal(result, true);
+    result = await some([
+      {id: 1, color: 'green'},
+      {id: 2, color: 'green'},
+      {id: 3, color: 'red'}
+    ], (item) => item.color === 'blue');
+    assert.equal(result, false);
   });
 });
 
