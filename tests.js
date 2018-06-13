@@ -32,6 +32,12 @@ describe('Greenmap reduce():', () => {
     assert.equal(result, 20);
     done();
   });
+
+  it('accepts a falsy `initialValue` argument', async (done) => {
+    const result = await reduce([false], ((accumulator, currentValue) => accumulator === currentValue), false);
+    assert.equal(result, true);
+    done();
+  });
 });
 
 describe('Greenmap sort():', () => {

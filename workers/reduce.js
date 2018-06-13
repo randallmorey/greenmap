@@ -12,5 +12,7 @@ export default (data, fnString, initialValue) => {
   // supported inline invocation, but they do not.
   // So fly safe and don't pass user or third-party scripts through `fn`.
   const fn = eval(fnString);
-  return initialValue ? data.reduce(fn, initialValue) : data.reduce(fn);
+  return typeof(initialValue) !== 'undefined' ?
+    data.reduce(fn, initialValue) :
+    data.reduce(fn);
 };
