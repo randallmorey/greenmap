@@ -1,6 +1,7 @@
 import greenlet from 'greenlet';
 import mapWorker from './workers/map';
 import reduceWorker from './workers/reduce';
+import reduceRightWorker from './workers/reduce-right';
 import sortWorker from './workers/sort';
 import findWorker from './workers/find';
 import filterWorker from './workers/filter';
@@ -42,6 +43,20 @@ function map(data, fn) {
 function reduce(data, fn, initialValue) {
   // Setup the reducer via greenlet to run in a worker.
   const reducer = greenlet(reduceWorker);
+  return reducer(data, functionToString(fn), initialValue);
+};
+
+/**
+ * Reduce an array asynchronously in a separate thread, right-to-left.
+ * @public
+ * @param {Array} data  an array
+ * @param {Function} fn  a function to reduce `data`
+ * @param {any} initialValue optional initial value
+ * @returns {Promise|null} a promise that resolves with the final reduced value
+ */
+function reduceRight(data, fn, initialValue) {
+  // Setup the reducer via greenlet to run in a worker.
+  const reducer = greenlet(reduceRightWorker);
   return reducer(data, functionToString(fn), initialValue);
 };
 
@@ -98,4 +113,4 @@ function some(data, fn) {
   return test(data, functionToString(fn));
 };
 
-export { map, reduce, sort, find, filter, some };
+export { map, reduce, reduceRight, sort, find, filter, some };
