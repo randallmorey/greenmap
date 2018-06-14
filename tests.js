@@ -1,4 +1,4 @@
-import { map, reduce, sort, find, filter, some } from './greenmap';
+import { map, reduce, reduceRight, sort, find, filter, some } from './greenmap';
 import assert from 'assert';
 
 describe('Greenmap map():', () => {
@@ -18,7 +18,7 @@ describe('Greenmap reduce():', () => {
     done();
   });
 
-  it('should return a promise that asynchronously maps the passed array using the passed function', (done) => {
+  it('should return a promise that asynchronously reduces the passed array using the passed function', (done) => {
     const promise = reduce([1, 2, 3, 4], (accumulator, currentValue) => accumulator + currentValue);
     assert.ok(promise);
     promise.then((result) => {
@@ -35,6 +35,35 @@ describe('Greenmap reduce():', () => {
 
   it('accepts a falsy `initialValue` argument', async (done) => {
     const result = await reduce([false], ((accumulator, currentValue) => accumulator === currentValue), false);
+    assert.equal(result, true);
+    done();
+  });
+});
+
+describe('Greenmap reduceRight():', () => {
+  it('asynchronously reduces the passed array using the passed function, right-to-left', async (done) => {
+    const result = await reduceRight([1, 2, 3, 4], (accumulator, currentValue) => accumulator + currentValue);
+    assert.equal(result, 10);
+    done();
+  });
+
+  it('should return a promise that asynchronously reduces the passed array using the passed function', (done) => {
+    const promise = reduceRight([1, 2, 3, 4], (accumulator, currentValue) => accumulator + currentValue);
+    assert.ok(promise);
+    promise.then((result) => {
+      assert.equal(result, 10);
+      done();
+    });
+  });
+
+  it('accepts an `initialValue` argument', async (done) => {
+    const result = await reduceRight([1, 2, 3, 4], ((accumulator, currentValue) => accumulator + currentValue), 10);
+    assert.equal(result, 20);
+    done();
+  });
+
+  it('accepts a falsy `initialValue` argument', async (done) => {
+    const result = await reduceRight([false], ((accumulator, currentValue) => accumulator === currentValue), false);
     assert.equal(result, true);
     done();
   });
