@@ -1,6 +1,7 @@
 export default (data, fnString, initialValue) => {
   const fn = eval(fnString);
+  const method = 'reduceRight';
   return typeof(initialValue) !== 'undefined' ?
-    data.reduceRight(fn, initialValue) :
-    data.reduceRight(fn);
+    data[method](fn, initialValue) :
+    data[method](fn);
 };
